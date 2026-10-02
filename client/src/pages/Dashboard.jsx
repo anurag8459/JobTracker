@@ -21,6 +21,7 @@ const Dashboard = () => {
   const fetchJobs = async () => {
     try {
       const response = await API.get("/jobs");
+
       setJobs(response.data);
     } catch (error) {
       console.error("Failed to fetch jobs:", error);
@@ -53,7 +54,6 @@ const Dashboard = () => {
           { name: "Rejected", value: stats.rejected },
         ];
 
-  // Get upcoming interviews
   const upcomingInterviews = jobs
     .filter(
       (job) =>
@@ -69,41 +69,69 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+
+      {/* Navbar */}
       <nav className="navbar">
+
         <h1>JobTrack</h1>
 
         <div>
-          <span>Hi, {user?.name}</span>
-          <button onClick={logout}>Logout</button>
+
+          <span>
+            Hi, {user?.name}
+          </span>
+
+          <button onClick={logout}>
+            Logout
+          </button>
+
         </div>
+
       </nav>
 
       <main className="dashboard-content">
 
         {/* Header */}
-<div className="dashboard-header">
-  <div className="dashboard-title">
-    <h2>Dashboard</h2>
-    <p>Track and manage your job applications.</p>
-  </div>
+        <div className="dashboard-header">
 
- <div className="dashboard-actions">
-  <Link to="/add-job" className="add-job-button">
-    + Add Application
-  </Link>
+          <div className="dashboard-title">
 
-  <Link to="/resumes" className="resume-button">
-    📄 Resume Manager
-  </Link>
+            <h2>Dashboard</h2>
 
-  <Link to="/interview-prep" className="prep-button">
-    ✅ Interview Prep
-  </Link>
-</div>
-</div>
+            <p>
+              Track and manage your job applications.
+            </p>
+
+          </div>
+
+          <div className="dashboard-actions">
+
+            <Link
+              to="/add-job"
+              className="add-job-button"
+            >
+              + Add Application
+            </Link>
+
+            <Link
+              to="/resumes"
+              className="resume-button"
+            >
+              📄 Resume Manager
+            </Link>
+
+            <Link
+              to="/interview-prep"
+              className="prep-button"
+            >
+              ✅ Interview Prep
+            </Link>
+
+          </div>
+
+        </div>
 
         {/* Statistics */}
-
         <div className="stats-grid">
 
           <div className="stat-card">
@@ -139,76 +167,98 @@ const Dashboard = () => {
         </div>
 
         {/* Analytics */}
-
         <section className="analytics-section">
 
           <div className="section-header">
+
             <div>
-              <h2>Application Analytics</h2>
-              <p>Overview of your application pipeline.</p>
+
+              <h2>
+                Application Analytics
+              </h2>
+
+              <p>
+                Overview of your application pipeline.
+              </p>
+
             </div>
+
           </div>
 
           <div className="chart-container">
 
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer
+              width="100%"
+              height={350}
+            >
+
               <PieChart>
 
                 <Pie
-  data={chartData}
-  dataKey="value"
-  nameKey="name"
-  cx="50%"
-  cy="50%"
-  outerRadius={120}
-  innerRadius={65}
-  paddingAngle={3}
-  label
->
-                 {chartData.map((entry, index) => {
-  const COLORS = [
-  "#2563eb", // Applied - blue
-  "#f59e0b", // Screening - orange
-  "#9333ea", // Interview - purple
-  "#16a34a", // Selected - green
-  "#dc2626", // Rejected - red
-];
+                  data={chartData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={120}
+                  innerRadius={65}
+                  paddingAngle={3}
+                  label
+                >
 
-  return (
-    <Cell
-      key={`cell-${index}`}
-      fill={COLORS[index % COLORS.length]}
-    />
-  );
-})}
+                  {chartData.map((entry, index) => {
+
+                    const COLORS = [
+                      "#2563eb",
+                      "#f59e0b",
+                      "#9333ea",
+                      "#16a34a",
+                      "#dc2626",
+                    ];
+
+                    return (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={
+                          COLORS[
+                            index % COLORS.length
+                          ]
+                        }
+                      />
+                    );
+
+                  })}
+
                 </Pie>
-<text
-  x="50%"
-  y="48%"
-  textAnchor="middle"
-  dominantBaseline="middle"
-  fontSize="28"
-  fontWeight="700"
-  fill="#1f2937"
->
-  {stats.total}
-</text>
 
-<text
-  x="50%"
-  y="58%"
-  textAnchor="middle"
-  fill="#6b7280"
-  fontSize="14"
->
-  Applications
-</text>
-               <Tooltip
-  formatter={(value) => [`${value} applications`, "Count"]}
-/>
+                <text
+                  x="50%"
+                  y="48%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize="28"
+                  fontWeight="700"
+                  fill="#1f2937"
+                >
+                  {stats.total}
+                </text>
+
+                <text
+                  x="50%"
+                  y="58%"
+                  textAnchor="middle"
+                  fill="#6b7280"
+                  fontSize="14"
+                >
+                  Applications
+                </text>
+
+                <Tooltip />
+
                 <Legend />
 
               </PieChart>
+
             </ResponsiveContainer>
 
           </div>
@@ -216,24 +266,37 @@ const Dashboard = () => {
         </section>
 
         {/* Upcoming Interviews */}
-
         <section className="interviews-section">
 
           <div className="section-header">
+
             <div>
-              <h2>🔔 Upcoming Interviews</h2>
-              <p>Stay prepared for your upcoming interviews.</p>
+
+              <h2>
+                🔔 Upcoming Interviews
+              </h2>
+
+              <p>
+                Stay prepared for your upcoming interviews.
+              </p>
+
             </div>
+
           </div>
 
           {upcomingInterviews.length === 0 ? (
 
             <div className="empty-state">
-              <h3>No upcoming interviews</h3>
+
+              <h3>
+                No upcoming interviews
+              </h3>
+
               <p>
-                Add an interview date to an application to see
-                it here.
+                Add an interview date to an application
+                to see it here.
               </p>
+
             </div>
 
           ) : (
@@ -248,12 +311,20 @@ const Dashboard = () => {
                 >
 
                   <div>
-                    <h3>{job.jobTitle}</h3>
-                    <p>{job.company}</p>
+
+                    <h3>
+                      {job.jobTitle}
+                    </h3>
+
+                    <p>
+                      {job.company}
+                    </p>
 
                     <small>
-                      {job.location || "Location not specified"}
+                      {job.location ||
+                        "Location not specified"}
                     </small>
+
                   </div>
 
                   <div className="interview-date">
@@ -286,30 +357,43 @@ const Dashboard = () => {
         </section>
 
         {/* Recent Applications */}
-
         <section className="applications-section">
 
           <div className="section-header">
-            <h2>Recent Applications</h2>
-            <Link to="/applications">View All</Link>
+
+            <h2>
+              Recent Applications
+            </h2>
+
+            <Link to="/applications">
+              View All
+            </Link>
+
           </div>
 
           {loading ? (
 
-            <p>Loading applications...</p>
+            <p>
+              Loading applications...
+            </p>
 
           ) : jobs.length === 0 ? (
 
             <div className="empty-state">
-              <h3>No applications yet</h3>
+
+              <h3>
+                No applications yet
+              </h3>
 
               <p>
-                Add your first job application to start tracking.
+                Add your first job application to
+                start tracking.
               </p>
 
               <Link to="/add-job">
                 Add Application
               </Link>
+
             </div>
 
           ) : (
@@ -324,13 +408,20 @@ const Dashboard = () => {
                 >
 
                   <div>
-                    <h3>{job.jobTitle}</h3>
 
-                    <p>{job.company}</p>
+                    <h3>
+                      {job.jobTitle}
+                    </h3>
+
+                    <p>
+                      {job.company}
+                    </p>
 
                     <small>
-                      {job.location || "Location not specified"}
+                      {job.location ||
+                        "Location not specified"}
                     </small>
+
                   </div>
 
                   <span
@@ -350,6 +441,7 @@ const Dashboard = () => {
         </section>
 
       </main>
+
     </div>
   );
 };

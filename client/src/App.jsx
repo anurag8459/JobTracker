@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -22,12 +23,16 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
 
+          {/* Hero / Landing Page */}
+          <Route path="/" element={<Home />} />
+
+          {/* Public Routes */}
           <Route path="/login" element={<Login />} />
 
           <Route path="/register" element={<Register />} />
 
+          {/* Protected Routes */}
           <Route
             path="/dashboard"
             element={
@@ -36,14 +41,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-  path="/interview-prep"
-  element={
-    <ProtectedRoute>
-      <InterviewPrep />
-    </ProtectedRoute>
-  }
-/>
 
           <Route
             path="/add-job"
@@ -71,16 +68,31 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-  path="/resumes"
-  element={
-    <ProtectedRoute>
-      <ResumeManager />
-    </ProtectedRoute>
-  }
-/>
 
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route
+            path="/resumes"
+            element={
+              <ProtectedRoute>
+                <ResumeManager />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/interview-prep"
+            element={
+              <ProtectedRoute>
+                <InterviewPrep />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Unknown Routes */}
+          <Route
+            path="*"
+            element={<Navigate to="/" />}
+          />
+
         </Routes>
       </AuthProvider>
     </BrowserRouter>

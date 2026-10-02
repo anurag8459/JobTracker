@@ -37,7 +37,8 @@ const AddJob = () => {
       navigate("/dashboard");
     } catch (error) {
       setError(
-        error.response?.data?.message || "Failed to add application"
+        error.response?.data?.message ||
+          "Failed to add application"
       );
     } finally {
       setLoading(false);
@@ -48,12 +49,20 @@ const AddJob = () => {
     <div className="form-page">
       <div className="form-card">
         <h1>Add Job Application</h1>
-        <p>Save the details of a new job application.</p>
 
-        {error && <div className="error-message">{error}</div>}
+        <p>
+          Save the details of a new job application.
+        </p>
+
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <label>Company</label>
+
           <input
             type="text"
             name="company"
@@ -64,6 +73,7 @@ const AddJob = () => {
           />
 
           <label>Job Title</label>
+
           <input
             type="text"
             name="jobTitle"
@@ -74,6 +84,7 @@ const AddJob = () => {
           />
 
           <label>Location</label>
+
           <input
             type="text"
             name="location"
@@ -83,6 +94,7 @@ const AddJob = () => {
           />
 
           <label>Job Type</label>
+
           <select
             name="jobType"
             value={formData.jobType}
@@ -95,6 +107,7 @@ const AddJob = () => {
           </select>
 
           <label>Status</label>
+
           <select
             name="status"
             value={formData.status}
@@ -108,6 +121,7 @@ const AddJob = () => {
           </select>
 
           <label>Application Date</label>
+
           <input
             type="date"
             name="applicationDate"
@@ -116,6 +130,7 @@ const AddJob = () => {
           />
 
           <label>Interview Date</label>
+
           <input
             type="datetime-local"
             name="interviewDate"
@@ -124,6 +139,7 @@ const AddJob = () => {
           />
 
           <label>Interview Notes</label>
+
           <textarea
             name="interviewNotes"
             placeholder="Add interview-related notes..."
@@ -133,6 +149,7 @@ const AddJob = () => {
           />
 
           <label>Additional Notes</label>
+
           <textarea
             name="notes"
             placeholder="Add any other notes..."
@@ -149,8 +166,13 @@ const AddJob = () => {
               Cancel
             </button>
 
-            <button type="submit" disabled={loading}>
-              {loading ? "Saving..." : "Save Application"}
+            <button
+              type="submit"
+              disabled={loading}
+            >
+              {loading
+                ? "Saving..."
+                : "Save Application"}
             </button>
           </div>
         </form>
